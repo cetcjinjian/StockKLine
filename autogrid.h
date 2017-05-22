@@ -41,9 +41,9 @@ public:
 
     int getWidgetWidth() const;
 
-    int getGridHeight() const;
+    float getGridHeight() const;
 
-    int getGridWidth() const;
+    float getGridWidth() const;
 
     int getHGridNum() const;
     void setHGridNum(int value);
@@ -51,11 +51,15 @@ public:
     int getWGridNum() const;
     void setWGridNum(int value);
 
-    int getAtomGridHeightMin() const;
-    void setAtomGridHeightMin(int value);
+    float getAtomGridHeightMin() const;
+    void setAtomGridHeightMin(float value);
 
-    int getAtomGridWidthMin() const;
-    void setAtomGridWidthMin(int value);
+    float getAtomGridWidthMin() const;
+    void setAtomGridWidthMin(float value);
+
+    float getAtomGridHeight() const;
+
+    float getAtomGridWidth() const;
 
 private:
 

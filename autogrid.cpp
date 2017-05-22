@@ -208,12 +208,12 @@ int AutoGrid::getWidgetWidth() const
     return widgetWidth;
 }
 
-int AutoGrid::getGridHeight() const
+float AutoGrid::getGridHeight() const
 {
     return gridHeight;
 }
 
-int AutoGrid::getGridWidth() const
+float AutoGrid::getGridWidth() const
 {
     return gridWidth;
 }
@@ -238,22 +238,32 @@ void AutoGrid::setWGridNum(int value)
     wGridNum = value;
 }
 
-int AutoGrid::getAtomGridHeightMin() const
+float AutoGrid::getAtomGridHeightMin() const
 {
     return atomGridHeightMin;
 }
 
-void AutoGrid::setAtomGridHeightMin(int value)
+void AutoGrid::setAtomGridHeightMin(float value)
 {
     atomGridHeightMin = value;
 }
 
-int AutoGrid::getAtomGridWidthMin() const
+float AutoGrid::getAtomGridWidthMin() const
 {
     return atomGridWidthMin;
 }
 
-void AutoGrid::setAtomGridWidthMin(int value)
+void AutoGrid::setAtomGridWidthMin(float value)
 {
     atomGridWidthMin = value;
+}
+
+float AutoGrid::getAtomGridHeight() const
+{
+    return atomGridHeight;
+}
+
+float AutoGrid::getAtomGridWidth() const
+{
+    return atomGridWidth;
 }
