@@ -33,10 +33,10 @@ void AutoGrid::resizeEvent(QResizeEvent *event)
 
 void AutoGrid::initial()
 {
-    atomGridHeight = 40;
-    atomGridHeightMin = 40;
-    atomGridWidth = 80;
-    atomGridWidthMin = 80;
+    atomGridHeight = 60;
+    atomGridHeightMin = 60;
+    atomGridWidth = 160;
+    atomGridWidthMin = 160;
     drawBK();
 }
 
@@ -208,12 +208,12 @@ int AutoGrid::getWidgetWidth() const
     return widgetWidth;
 }
 
-float AutoGrid::getGridHeight() const
+double AutoGrid::getGridHeight() const
 {
     return gridHeight;
 }
 
-float AutoGrid::getGridWidth() const
+double AutoGrid::getGridWidth() const
 {
     return gridWidth;
 }
@@ -238,32 +238,32 @@ void AutoGrid::setWGridNum(int value)
     wGridNum = value;
 }
 
-float AutoGrid::getAtomGridHeightMin() const
+double AutoGrid::getAtomGridHeightMin() const
 {
     return atomGridHeightMin;
 }
 
-void AutoGrid::setAtomGridHeightMin(float value)
+void AutoGrid::setAtomGridHeightMin(double value)
 {
     atomGridHeightMin = value;
 }
 
-float AutoGrid::getAtomGridWidthMin() const
+double AutoGrid::getAtomGridWidthMin() const
 {
     return atomGridWidthMin;
 }
 
-void AutoGrid::setAtomGridWidthMin(float value)
+void AutoGrid::setAtomGridWidthMin(double value)
 {
     atomGridWidthMin = value;
 }
 
-float AutoGrid::getAtomGridHeight() const
+double AutoGrid::getAtomGridHeight() const
 {
     return atomGridHeight;
 }
 
-float AutoGrid::getAtomGridWidth() const
+double AutoGrid::getAtomGridWidth() const
 {
     return atomGridWidth;
 }

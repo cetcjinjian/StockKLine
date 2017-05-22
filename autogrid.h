@@ -4,10 +4,6 @@
 #include <QWidget>
 
 
-
-
-
-
 class AutoGrid : public QWidget
 {
     Q_OBJECT
@@ -41,9 +37,9 @@ public:
 
     int getWidgetWidth() const;
 
-    float getGridHeight() const;
+    double getGridHeight() const;
 
-    float getGridWidth() const;
+    double getGridWidth() const;
 
     int getHGridNum() const;
     void setHGridNum(int value);
@@ -51,15 +47,15 @@ public:
     int getWGridNum() const;
     void setWGridNum(int value);
 
-    float getAtomGridHeightMin() const;
-    void setAtomGridHeightMin(float value);
+    double getAtomGridHeightMin() const;
+    void setAtomGridHeightMin(double value);
 
-    float getAtomGridWidthMin() const;
-    void setAtomGridWidthMin(float value);
+    double getAtomGridWidthMin() const;
+    void setAtomGridWidthMin(double value);
 
-    float getAtomGridHeight() const;
+    double getAtomGridHeight() const;
 
-    float getAtomGridWidth() const;
+    double getAtomGridWidth() const;
 
 private:
 
@@ -76,12 +72,12 @@ private:
     int widgetWidth;
 
     //当前表格的宽度和高度
-    float gridHeight;
-    float gridWidth;
+    double gridHeight;
+    double gridWidth;
 
     //当前表格中最小表格的宽度和高度
-    float atomGridHeight;
-    float atomGridWidth;
+    double atomGridHeight;
+    double atomGridWidth;
 
 
     //表格中小格子的数量
@@ -90,8 +86,8 @@ private:
 
 
     //当前表格中最小表格的宽度和高度的最小值
-    float atomGridHeightMin;
-    float atomGridWidthMin;
+    double atomGridHeightMin;
+    double atomGridWidthMin;
 
 
 signals:
