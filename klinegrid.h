@@ -18,6 +18,7 @@ public:
     void virtual resizeEvent(QResizeEvent* event);
 
 
+
     bool readData(QString strFile);
     void initial();
     void drawLine();
@@ -37,6 +38,16 @@ public:
     void drawMouseMoveCrossVerLine();
     void drawMouseMoveCrossHorLine();
     void drawTips2();
+
+
+
+    //画均线
+    void drawAverageLine();
+    void drawAverageLine5();
+    void drawAverageLine10();
+    void drawAverageLine20();
+    void drawAverageLine30();
+    void drawAverageLine60();
 
 
 
@@ -74,6 +85,11 @@ private:
 
     //键盘是否按下
     bool isKeyDown = false;
+
+
+
+    //是否画均线
+    bool isDrawAverageLine = true;
 };
 
 #endif // KLINEGRID_H

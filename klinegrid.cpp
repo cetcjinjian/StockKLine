@@ -6,6 +6,7 @@
 #include <QPen>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QVector>
 
 KLineGrid::KLineGrid(QWidget *parent) : AutoGrid(parent)
 {
@@ -71,6 +72,8 @@ void KLineGrid::drawLine()
     //画k线
     drawKline();
 
+
+    //画十字线
     if( !isKeyDown && bCross)
     {
         drawCross2();
@@ -80,6 +83,10 @@ void KLineGrid::drawLine()
     {
         drawCross();
     }
+
+
+    //画5日均线
+    drawAverageLine5();
 
 }
 
@@ -183,8 +190,6 @@ void KLineGrid::drawKline()
         if( mDataFile.kline[i].openingPrice > mDataFile.kline[i].closeingPrice )
         {
             //画开盘与收盘之间的粗实线
-
-
             pen.setWidth(lineWidth);
             painter.setPen(pen);
             p1.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
@@ -261,9 +266,6 @@ void KLineGrid::drawKline()
             painter.drawLine(p1,p2);
             painter.drawLine(p3,p4);
         }
-
-
-
 
 
     }
@@ -579,5 +581,88 @@ void KLineGrid::drawTips2()
 }
 
 
+void KLineGrid::drawAverageLine5()
+{
+    QPainter painter(this);
+    QPen     pen;
+    pen.setColor(Qt::white);
+    painter.setPen(pen);
+
+    //y轴缩放
+    yscale = getGridHeight() / (highestBid -lowestBid ) ;
+
+    //画笔的线宽
+    lineWidth;
+
+    //画线连接的两个点
+
+    QVector<QPoint> point5;
+    QVector<QPoint> point10;
+    QVector<QPoint> point20;
+    QVector<QPoint> point30;
+    QVector<QPoint> point60;
+
+    QPoint temp;
+
+    double xstep = getGridWidth() / totalDay;
 
 
+
+    for( int i= beginDay;i<endDay;++i)
+    {
+
+        temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+        temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine5 - lowestBid) *yscale - getMarginBottom());
+        point5.push_back(temp);
+
+
+        temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+        temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine10 - lowestBid) *yscale - getMarginBottom());
+        point10.push_back(temp);
+
+        temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+        temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine20 - lowestBid) *yscale - getMarginBottom());
+        point20.push_back(temp);
+
+        temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+        temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine30 - lowestBid) *yscale - getMarginBottom());
+        point30.push_back(temp);
+
+        temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+        temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine60 - lowestBid) *yscale - getMarginBottom());
+        point60.push_back(temp);
+
+
+    }
+
+    // 5
+    QPolygon poly5(point5);
+    painter.drawPolyline(poly5);
+
+
+    //10
+    pen.setColor(Qt::yellow);
+    painter.setPen(pen);
+    QPolygon poly10(point10);
+    painter.drawPolyline(poly10);
+
+
+    //20
+    pen.setColor(Qt::magenta);
+    painter.setPen(pen);
+    QPolygon poly20(point20);
+    painter.drawPolyline(poly20);
+
+
+    pen.setColor(Qt::green);
+    painter.setPen(pen);
+    QPolygon poly30(point30);
+    painter.drawPolyline(poly30);
+
+
+    pen.setColor(Qt::cyan);
+    painter.setPen(pen);
+    QPolygon poly60(point60);
+    painter.drawPolyline(poly60);
+
+}

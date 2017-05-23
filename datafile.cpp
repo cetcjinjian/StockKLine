@@ -19,6 +19,8 @@ bool DataFile::readData(QString filestr)
         return false;
 
 
+    int numCount = 0;
+
     char    line[1024];
     char    *token;
     KLine temp;
@@ -51,6 +53,10 @@ bool DataFile::readData(QString filestr)
 
         token = strtok( NULL, "'\t'" );
         if( token != NULL )
+            temp.amountOfAmplitude = atof(token);
+
+        token = strtok( NULL, "'\t'" );
+        if( token != NULL )
             temp.totalVolume = atof(token);
 
         token = strtok( NULL, "'\t'" );
@@ -66,7 +72,114 @@ bool DataFile::readData(QString filestr)
             temp.volumeAmount = atof(token);
 
         kline.push_back(temp);
+
+
         }
+
+
+    calAverageLine();
     return true;
+}
+
+
+void DataFile::calAverageLine()
+{
+
+    // 初始化各均线的值
+    for(int i=0;i<4;i++)
+        kline[i].averageLine5 = 0;
+
+    for(int i=0;i<9;i++)
+        kline[i].averageLine10 = 0;
+
+    for(int i=0;i<19;i++)
+        kline[i].averageLine20 = 0;
+
+    for(int i=0;i<29;i++)
+        kline[i].averageLine30 = 0;
+
+    for(int i=0;i<59;i++)
+        kline[i].averageLine60 = 0;
+
+
+    calAverageLine5();
+    calAverageLine10();
+    calAverageLine20();
+    calAverageLine30();
+    calAverageLine60();
+
+}
+
+
+void DataFile::calAverageLine5()
+{
+    for( int i=4;i<kline.size();++i)
+    {
+        double sum = 0;
+        for(int j=i-4;j<=i;++j)
+        {
+            sum += kline[j].closeingPrice;
+        }
+        kline[i].averageLine5 = sum /5;
+    }
+}
+
+
+void DataFile::calAverageLine10()
+{
+    for( int i=9;i<kline.size();++i)
+    {
+        double sum = 0;
+        for(int j=i-9;j<=i;++j)
+        {
+            sum += kline[j].closeingPrice;
+        }
+        kline[i].averageLine10 = sum /10;
+    }
+}
+
+
+
+
+void DataFile::calAverageLine20()
+{
+    for( int i=19;i<kline.size();++i)
+    {
+        double sum = 0;
+        for(int j=i-19;j<=i;++j)
+        {
+            sum += kline[j].closeingPrice;
+        }
+        kline[i].averageLine20 = sum /20;
+    }
+}
+
+
+void DataFile::calAverageLine30()
+{
+    for( int i=29;i<kline.size();++i)
+    {
+        double sum = 0;
+        for(int j=i-29;j<=i;++j)
+        {
+            sum += kline[j].closeingPrice;
+        }
+        kline[i].averageLine30 = sum /30;
+    }
+}
+
+
+
+void DataFile::calAverageLine60()
+{
+    for( int i=59;i<kline.size();++i)
+    {
+        double sum = 0;
+        for(int j=i-59;j<=i;++j)
+        {
+            sum += kline[j].closeingPrice;
+        }
+        kline[i].averageLine60 = sum /60;
+    }
 }
 
