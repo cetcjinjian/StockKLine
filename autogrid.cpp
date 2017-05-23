@@ -35,8 +35,8 @@ void AutoGrid::initial()
 {
     atomGridHeight = 60;
     atomGridHeightMin = 60;
-    atomGridWidth = 160;
-    atomGridWidthMin = 160;
+    atomGridWidth = 640;
+    atomGridWidthMin = 640;
     drawBK();
 }
 

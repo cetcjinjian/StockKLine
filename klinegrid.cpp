@@ -154,6 +154,9 @@ void KLineGrid::drawKline()
     QPoint p1;
     QPoint p2;
 
+    QPoint p3;
+    QPoint p4;
+
     double xstep = getGridWidth() / totalDay;
 
     for( int i= beginDay;i<endDay;++i)
@@ -161,7 +164,7 @@ void KLineGrid::drawKline()
         if( mDataFile.kline[i].openingPrice > mDataFile.kline[i].closeingPrice )
             pen.setColor(QColor(85,252,252));
         else
-             pen.setColor(Qt::red);
+            pen.setColor(Qt::red);
 
 
         lineWidth = getGridWidth() / totalDay;
@@ -173,23 +176,96 @@ void KLineGrid::drawKline()
         if( lineWidth < 3)
             lineWidth = 3;
 
-        //画开盘与收盘之间的粗实线
-        pen.setWidth(lineWidth);
-        painter.setPen(pen);
-        p1.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-        p1.setY( getWidgetHeight() - (mDataFile.kline[i].openingPrice - lowestBid) *yscale - getMarginBottom());
-        p2.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-        p2.setY( getWidgetHeight() - (mDataFile.kline[i].closeingPrice - lowestBid) *yscale - getMarginBottom());
-        painter.drawLine(p1,p2);
 
-        //画最高价与最低价之间的细线
-        pen.setWidth(1);
-        painter.setPen(pen);
-        p1.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-        p1.setY( getWidgetHeight() - (mDataFile.kline[i].highestBid - lowestBid) *yscale - getMarginBottom());
-        p2.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-        p2.setY( getWidgetHeight() - (mDataFile.kline[i].lowestBid - lowestBid) *yscale - getMarginBottom());
-        painter.drawLine(p1,p2);
+
+
+
+        if( mDataFile.kline[i].openingPrice > mDataFile.kline[i].closeingPrice )
+        {
+            //画开盘与收盘之间的粗实线
+
+
+            pen.setWidth(lineWidth);
+            painter.setPen(pen);
+            p1.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            p1.setY( getWidgetHeight() - (mDataFile.kline[i].openingPrice - lowestBid) *yscale - getMarginBottom());
+            p2.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            p2.setY( getWidgetHeight() - (mDataFile.kline[i].closeingPrice - lowestBid) *yscale - getMarginBottom());
+            painter.drawLine(p1,p2);
+
+
+            //画最高价与最低价之间的细线
+            pen.setWidth(1);
+            painter.setPen(pen);
+            p1.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            p1.setY( getWidgetHeight() - (mDataFile.kline[i].highestBid - lowestBid) *yscale - getMarginBottom());
+            p2.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            p2.setY( getWidgetHeight() - (mDataFile.kline[i].lowestBid - lowestBid) *yscale - getMarginBottom());
+            painter.drawLine(p1,p2);
+
+
+        }
+        else
+        {
+            //像同花顺一样阳线画成空心的
+
+            pen.setWidth(1);
+            painter.setPen(pen);
+
+
+            p1.setX( getMarginLeft() + xstep *(i - beginDay) );
+            p1.setY( getWidgetHeight() - (mDataFile.kline[i].openingPrice - lowestBid) *yscale - getMarginBottom());
+
+            p2.setX( getMarginLeft() + xstep *(i - beginDay) + lineWidth);
+            p2.setY( getWidgetHeight() - (mDataFile.kline[i].openingPrice - lowestBid) *yscale - getMarginBottom());
+
+
+            p3.setX( getMarginLeft() + xstep *(i - beginDay) );
+            p3.setY( getWidgetHeight() - (mDataFile.kline[i].closeingPrice - lowestBid) *yscale - getMarginBottom());
+
+            p4.setX( getMarginLeft() + xstep *(i - beginDay) + lineWidth);
+            p4.setY( getWidgetHeight() - (mDataFile.kline[i].closeingPrice - lowestBid) *yscale - getMarginBottom());
+
+            painter.drawLine(p1,p2);
+            painter.drawLine(p1,p3);
+            painter.drawLine(p2,p4);
+            painter.drawLine(p3,p4);
+
+
+            //画最高价与最低价之间的细线
+            pen.setWidth(1);
+            painter.setPen(pen);
+            p1.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            p1.setY( getWidgetHeight() - (mDataFile.kline[i].highestBid - lowestBid) *yscale - getMarginBottom());
+
+
+            double y1,y2;
+            if( mDataFile.kline[i].openingPrice > mDataFile.kline[i].closeingPrice )
+            {
+                y1 = mDataFile.kline[i].openingPrice;
+                y2 = mDataFile.kline[i].closeingPrice;
+            }
+            else
+            {
+                y1 = mDataFile.kline[i].closeingPrice;
+                y2 = mDataFile.kline[i].openingPrice;
+            }
+
+            p2.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            p2.setY( getWidgetHeight() - (y1 - lowestBid) *yscale - getMarginBottom());
+            p3.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            p3.setY( getWidgetHeight() - (y2 - lowestBid) *yscale - getMarginBottom());
+            p4.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            p4.setY(getWidgetHeight() - (mDataFile.kline[i].lowestBid - lowestBid) *yscale - getMarginBottom());
+
+            painter.drawLine(p1,p2);
+            painter.drawLine(p3,p4);
+        }
+
+
+
+
+
     }
 }
 
@@ -378,7 +454,7 @@ void KLineGrid::drawCrossHorLine()
 
 
     if( mDataFile.kline[currentDay].openingPrice < mDataFile.kline[currentDay].closeingPrice )
-        yPos =  ( mDataFile.kline[currentDay].openingPrice - lowestBid ) * yscale - 0.5*lineWidth;
+        yPos =  ( mDataFile.kline[currentDay].openingPrice - lowestBid ) * yscale ;
     else
         yPos =  ( mDataFile.kline[currentDay].openingPrice - lowestBid ) * yscale + 0.5*lineWidth;
 
