@@ -1,5 +1,6 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "klinegrid.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -7,8 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    pgrid = new AutoGrid(this);
+    pgrid = new KLineGrid(this);
     pgrid->setObjectName(tr("kline"));
+    pgrid->setFocusPolicy(Qt::StrongFocus);
     setCentralWidget(pgrid);
     resize(1200,800);
 }
