@@ -284,7 +284,7 @@ void KLineGrid::keyPressEvent(QKeyEvent *event)
 
         if( mousePoint.x() - xstep < getMarginLeft())
         {
-            if( endDay -1 < 0)
+            if( beginDay -1 < 0)
                 return;
             endDay -= 1;
             beginDay -= 1;
@@ -341,9 +341,6 @@ void KLineGrid::keyPressEvent(QKeyEvent *event)
             beginDay = 0;
             endDay = beginDay + totalDay;
         }
-
-
-
 
         update();
 
