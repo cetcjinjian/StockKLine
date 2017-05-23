@@ -71,9 +71,6 @@ void KLineGrid::drawLine()
     //画k线
     drawKline();
 
-
-
-
     if( !isKeyDown && bCross)
     {
         drawCross2();
@@ -198,11 +195,7 @@ void KLineGrid::drawKline()
 
 void KLineGrid::keyPressEvent(QKeyEvent *event)
 {
-
-
-
     currentDay = (double)( mousePoint.x() - getMarginLeft() ) / (getGridWidth()) * totalDay + beginDay;
-
 
     isKeyDown = true;
     switch(event->key())
