@@ -18,9 +18,6 @@ bool DataFile::readData(QString filestr)
     if( !pfile->open(QFile::ReadOnly) )
         return false;
 
-
-    int numCount = 0;
-
     char    line[1024];
     char    *token;
     KLine temp;
@@ -57,11 +54,11 @@ bool DataFile::readData(QString filestr)
 
         token = strtok( NULL, "'\t'" );
         if( token != NULL )
-            temp.totalVolume = atof(token);
+            temp.totalVolume = (token);
 
         token = strtok( NULL, "'\t'" );
         if( token != NULL )
-            temp.totalAmount = atof(token);
+            temp.totalAmount = (token);
 
         token = strtok( NULL, "'\t'" );
         if( token != NULL )

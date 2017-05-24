@@ -5,10 +5,14 @@
 #include "datafile.h"
 
 #include <QPoint>
+#include "showdetail.h"
+#include <QString>
 
 
 class KLineGrid : public AutoGrid
 {
+    Q_OBJECT
+
 public:
     explicit KLineGrid(QWidget *parent = 0);
     void virtual paintEvent(QPaintEvent* event);
@@ -16,6 +20,7 @@ public:
     void virtual mouseMoveEvent(QMouseEvent* event);
     void virtual mousePressEvent(QMouseEvent* event);
     void virtual resizeEvent(QResizeEvent* event);
+    ~KLineGrid();
 
 
 
@@ -53,7 +58,7 @@ public:
 
 private:
     DataFile mDataFile;
-
+    ShowDetail* mShowDrtail;
 
 
     //画k线的起始日期和终止日期
@@ -90,6 +95,11 @@ private:
 
     //是否画均线
     bool isDrawAverageLine = true;
+
+signals:
+
+
+
 };
 
 #endif // KLINEGRID_H

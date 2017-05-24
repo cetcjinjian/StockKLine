@@ -6,10 +6,16 @@
 
 QT       += core gui
 
+
+
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = StockKLine
 TEMPLATE = app
+
+
+
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -27,11 +33,17 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     autogrid.cpp \
     klinegrid.cpp \
-    datafile.cpp
+    datafile.cpp \
+    showdetail.cpp
 
 HEADERS  += mainwindow.h \
     autogrid.h \
     klinegrid.h \
-    datafile.h
+    datafile.h \
+    showdetail.h
 
 FORMS    += mainwindow.ui
+
+
+
+TRANSLATIONS = myI18N_zh_CN.ts

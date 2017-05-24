@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 4.2.2, 2017-05-23T20:48:22. -->
+=======
+<!-- Written by QtCreator 4.2.2, 2017-05-24T15:48:29. -->
+>>>>>>> 9d1dfdda1d200b30056d45bb9f2b9c21c8c70fd5
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -292,7 +296,11 @@
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">StockKLine.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
+<<<<<<< HEAD
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">D:/QTbin/StockKLine</value>
+=======
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">E:/QTbin/StockKLine</value>
+>>>>>>> 9d1dfdda1d200b30056d45bb9f2b9c21c8c70fd5
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
