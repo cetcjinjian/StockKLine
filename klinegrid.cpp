@@ -7,6 +7,9 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QVector>
+#include <QDockWidget>
+#include <QWidget>
+#include "mainwindow.h"
 
 KLineGrid::KLineGrid(QWidget *parent) : AutoGrid(parent)
 {
@@ -21,6 +24,13 @@ bool KLineGrid::readData(QString strFile)
         return true;
     else
         return false;
+}
+
+
+KLineGrid::~KLineGrid()
+{
+    delete mShowDrtail;
+    mShowDrtail = nullptr;
 }
 
 void KLineGrid::initial()
@@ -49,6 +59,31 @@ void KLineGrid::initial()
     highestBid = 0;
     lowestBid = 1000;
     maxVolume = 0;
+
+
+    //构造详情展示页面
+
+    /*
+        mShowDrtail = new ShowDetail(this);
+        //mShowDrtail->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetClosable);
+        mShowDrtail->setFeatures(QDockWidget::QDockWidget::DockWidgetVerticalTitleBar);
+        QWidget* main = this->parentWidget() ;
+        static_cast<MainWindow*>(main)->addDockWidget(Qt::AllDockWidgetAreas,mShowDrtail);
+        QWidget* titleWidget = new QWidget(this);
+        //mShowDrtail->setTitleBarWidget( titleWidget );
+        mShowDrtail->resize(50,100);
+        //mShowDrtail->setGeometry(20,20,100,300);
+        //mShowDrtail->move(20,20);
+    */
+
+
+    //构造详细数据展示页面
+    mShowDrtail = new ShowDetail(this);
+    mShowDrtail->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
+    QWidget* main = this->parentWidget() ;
+    static_cast<MainWindow*>(main)->addDockWidget(Qt::LeftDockWidgetArea,mShowDrtail);
+    //delete main;
+
 }
 
 
@@ -104,8 +139,8 @@ void KLineGrid::getIndicator()
             highestBid = mDataFile.kline[i].highestBid;
         if( mDataFile.kline[i].lowestBid < lowestBid )
             lowestBid = mDataFile.kline[i].lowestBid;
-        if( mDataFile.kline[i].totalVolume > maxVolume )
-            maxVolume = mDataFile.kline[i].totalVolume;
+//        if( mDataFile.kline[i].totalVolume.toFloat() > maxVolume )
+//            maxVolume = mDataFile.kline[i].totalVolume.toFloat();
     }
 }
 
@@ -471,9 +506,10 @@ void KLineGrid::drawCrossHorLine()
 void KLineGrid::drawTips()
 {
 
+
     QPainter painter(this);
     QPen     pen;
-    QBrush brush(Qt::red);
+    QBrush brush(QColor(64,0,128));
     painter.setBrush(brush);
     pen.setColor(QColor("#FFFFFF"));
     pen.setWidth(1);
@@ -508,17 +544,54 @@ void KLineGrid::drawTips()
     painter.drawText(rectText, str.sprintf("%.2f",yval));
 
 
+
+
+    QColor openingColor = mDataFile.kline[currentDay].openingPrice > mDataFile.kline[currentDay -1].openingPrice ?
+                          QColor("#FF0000"):QColor("#00FF00");
+
+    QColor highestColor = mDataFile.kline[currentDay].highestBid > mDataFile.kline[currentDay -1].closeingPrice ?
+                QColor("#FF0000"):QColor("#00FF00");
+
+    QColor lowestColor = mDataFile.kline[currentDay].lowestBid > mDataFile.kline[currentDay -1].closeingPrice ?
+                QColor("#FF0000"):QColor("#00FF00");
+
+
+    QColor closeingColor = mDataFile.kline[currentDay].closeingPrice > mDataFile.kline[currentDay ].openingPrice ?
+                QColor("#FF0000"):QColor("#00FF00");
+
+
+    QColor amountOfIncreaseColor = mDataFile.kline[currentDay].amountOfIncrease > 0 ?
+                QColor("#FF0000"):QColor("#00FF00");
+
+    mShowDrtail->receiveParams(      mDataFile.kline[currentDay].time,QColor("#FFFFFF"),
+                                     mDataFile.kline[currentDay].closeingPrice,QColor("#FF0000"),
+                                     mDataFile.kline[currentDay].openingPrice,openingColor,
+                                     mDataFile.kline[currentDay].highestBid,highestColor,
+                                     mDataFile.kline[currentDay].lowestBid,lowestColor,
+                                     mDataFile.kline[currentDay].closeingPrice,closeingColor,
+                                     mDataFile.kline[currentDay].amountOfIncrease,amountOfIncreaseColor,
+                                     mDataFile.kline[currentDay].amountOfAmplitude,QColor("#02E2F4"),
+                                     mDataFile.kline[currentDay].totalVolume,QColor("#02E2F4"),
+                                     mDataFile.kline[currentDay].totalAmount,QColor("#02E2F4"),
+                                     mDataFile.kline[currentDay].turnoverRate,QColor("#02E2F4")
+                                     );
 }
 
 
 void KLineGrid::drawMouseMoveCrossVerLine()
 {
+
+    if(mousePoint.x() < getMarginLeft() || mousePoint.x() > getWidgetWidth() - getMarginRight())
+        return;
+
+    if(mousePoint.y() < getMarginTop() || mousePoint.y() > getWidgetHeight() - getMarginBottom())
+        return;
+
     QPainter painter(this);
     QPen     pen;
     pen.setColor(QColor("#FFFFFF"));
     pen.setWidth(1);
     painter.setPen(pen);
-
     painter.drawLine(mousePoint.x(),getMarginTop(),
                      mousePoint.x(),getWidgetHeight() - getMarginBottom());
 
@@ -527,6 +600,12 @@ void KLineGrid::drawMouseMoveCrossVerLine()
 
 void KLineGrid::drawMouseMoveCrossHorLine()
 {
+
+    if(mousePoint.x() < getMarginLeft() || mousePoint.x() > getWidgetWidth() - getMarginRight())
+        return;
+
+    if(mousePoint.y() < getMarginTop() || mousePoint.y() > getWidgetHeight() - getMarginBottom())
+        return;
 
     QPainter painter(this);
     QPen     pen;
@@ -543,6 +622,7 @@ void KLineGrid::drawMouseMoveCrossHorLine()
 
 void KLineGrid::drawCross2()
 {
+
     drawMouseMoveCrossHorLine();
     drawMouseMoveCrossVerLine();
     drawTips2();
@@ -553,9 +633,16 @@ void KLineGrid::drawCross2()
 
 void KLineGrid::drawTips2()
 {
+
+    if(mousePoint.x() < getMarginLeft() || mousePoint.x() > getWidgetWidth() - getMarginRight())
+        return;
+
+    if(mousePoint.y() < getMarginTop() || mousePoint.y() > getWidgetHeight() - getMarginBottom())
+        return;
+
     QPainter painter(this);
     QPen     pen;
-    QBrush brush(Qt::red);
+    QBrush brush(QColor(64,0,128));
     painter.setBrush(brush);
     pen.setColor(QColor("#FFFFFF"));
     pen.setWidth(1);
@@ -665,3 +752,18 @@ void KLineGrid::drawAverageLine5()
     painter.drawPolyline(poly60);
 
 }
+
+//void KLineGrid::showDetaiInformation(QString time,
+//                                   double currentPrice,
+//                                   double openingPrice,
+//                                   double highestBid,
+//                                   double lowestBid,
+//                                   double closeingPrice,
+//                                   double amountOfIncrease,
+//                                   double amountOfAmplitude,
+//                                   double totalVolume,
+//                                   double totalAmount,
+//                                   double turnoverRate)
+//{
+//    ;
+//}

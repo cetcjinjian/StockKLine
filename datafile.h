@@ -16,8 +16,8 @@ typedef struct
     double closeingPrice;           //收盘
     double amountOfIncrease;        //涨幅
     double amountOfAmplitude;       //振幅
-    double totalVolume;             //总手
-    double totalAmount;             //金额
+    QString totalVolume;             //总手
+    QString totalAmount;             //金额
     double turnoverRate;            //换手率
     double volumeAmount;            //成交次数
     double averageLine5;            //5日均线
