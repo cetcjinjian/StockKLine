@@ -187,6 +187,8 @@ void KLineGrid::drawKline()
 
 
 
+        //阴线
+
         if( mDataFile.kline[i].openingPrice > mDataFile.kline[i].closeingPrice )
         {
             //画开盘与收盘之间的粗实线
@@ -195,7 +197,7 @@ void KLineGrid::drawKline()
             p1.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
             p1.setY( getWidgetHeight() - (mDataFile.kline[i].openingPrice - lowestBid) *yscale - getMarginBottom());
             p2.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-            p2.setY( getWidgetHeight() - (mDataFile.kline[i].closeingPrice - lowestBid) *yscale - getMarginBottom());
+            p2.setY( getWidgetHeight() - (mDataFile.kline[i].closeingPrice - lowestBid) *yscale - getMarginBottom() - 0.5*lineWidth);
             painter.drawLine(p1,p2);
 
 
@@ -453,9 +455,9 @@ void KLineGrid::drawCrossHorLine()
 
 
     if( mDataFile.kline[currentDay].openingPrice < mDataFile.kline[currentDay].closeingPrice )
-        yPos =  ( mDataFile.kline[currentDay].openingPrice - lowestBid ) * yscale ;
+        yPos =  ( mDataFile.kline[currentDay].closeingPrice - lowestBid ) * yscale ;
     else
-        yPos =  ( mDataFile.kline[currentDay].openingPrice - lowestBid ) * yscale + 0.5*lineWidth;
+        yPos =  ( mDataFile.kline[currentDay].closeingPrice - lowestBid ) * yscale ;
 
     QLine verline ( getMarginLeft(),getWidgetHeight()-getMarginBottom()-yPos,
                     getWidgetWidth()-getMarginRight(),getWidgetHeight()-getMarginBottom()-yPos);
@@ -479,14 +481,14 @@ void KLineGrid::drawTips()
 
 
     int currentDay = ( mousePoint.x() - getMarginLeft() ) * totalDay / getGridWidth() + beginDay;
-    double yval = mDataFile.kline[currentDay].openingPrice;
+    double yval = mDataFile.kline[currentDay].closeingPrice;
 
 
     double yPos;
     if( mDataFile.kline[currentDay].openingPrice < mDataFile.kline[currentDay].closeingPrice )
-        yPos =  ( mDataFile.kline[currentDay].openingPrice - lowestBid ) * yscale - 0.5*lineWidth;
+        yPos =  ( mDataFile.kline[currentDay].closeingPrice - lowestBid ) * yscale ;
     else
-        yPos =  ( mDataFile.kline[currentDay].openingPrice - lowestBid ) * yscale + 0.5*lineWidth;
+        yPos =  ( mDataFile.kline[currentDay].closeingPrice - lowestBid ) * yscale ;
 
 
     yPos = getWidgetHeight()-getMarginBottom()-yPos;
