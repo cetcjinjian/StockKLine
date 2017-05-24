@@ -2,21 +2,46 @@
 #include "ui_mainwindow.h"
 #include "klinegrid.h"
 #include <QTextCodec>
+#include <QSplitter>
+#include <QTextEdit>
 
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-{
-
-
-    //QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-
+{   
     ui->setupUi(this);
+
+
+
+
     pgrid = new KLineGrid(this);
     pgrid->setObjectName(tr("kline"));
     pgrid->setFocusPolicy(Qt::StrongFocus);
-    setCentralWidget(pgrid);
+
+    auto p2 = new KLineGrid(this);
+    p2->setFocusPolicy(Qt::StrongFocus);
+//    setCentralWidget(pgrid);
+
+
+    QSplitter *splitterMain = new QSplitter(Qt::Vertical, 0); //新建主分割窗口，水平分割
+
+
+    QSplitter *splitterLeft = new QSplitter(Qt::Vertical, splitterMain);
+//    QTextEdit *textDown = new QTextEdit(QObject::tr("down"));
+//    textDown->setAlignment(Qt::AlignCenter);
+    splitterLeft->addWidget(pgrid);
+
+
+
+    QSplitter *splitterRight = new QSplitter(Qt::Vertical, splitterMain);
+//    QTextEdit *textUp = new QTextEdit(QObject::tr("top"),splitterRight);
+//    textUp->setAlignment(Qt::AlignCenter);
+
+    splitterRight->addWidget(p2);
+
+    this->setCentralWidget(splitterMain);
+
     resize(1200,800);
 }
 
