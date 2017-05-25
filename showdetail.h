@@ -4,9 +4,11 @@
 
 #include <QWidget>
 #include <QDockWidget>
+#include <QDialog>
 
 
 class ShowDetail : public QDockWidget
+//class ShowDetail : public QDialog
 {
 
     Q_OBJECT

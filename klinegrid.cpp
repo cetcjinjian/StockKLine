@@ -121,7 +121,15 @@ void KLineGrid::drawLine()
 
 
     //画5日均线
-    drawAverageLine5();
+    drawAverageLine(5);
+    //画5日均线
+    drawAverageLine(10);
+    //画5日均线
+    drawAverageLine(20);
+    //画5日均线
+    drawAverageLine(30);
+    //画5日均线
+    drawAverageLine(60);
 
 }
 
@@ -217,8 +225,6 @@ void KLineGrid::drawKline()
         //最小线宽为3
         if( lineWidth < 3)
             lineWidth = 3;
-
-
 
 
 
@@ -505,8 +511,6 @@ void KLineGrid::drawCrossHorLine()
 
 void KLineGrid::drawTips()
 {
-
-
     QPainter painter(this);
     QPen     pen;
     QBrush brush(QColor(64,0,128));
@@ -667,103 +671,111 @@ void KLineGrid::drawTips2()
 }
 
 
-void KLineGrid::drawAverageLine5()
+
+void KLineGrid::drawAverageLine(int day)
 {
-    QPainter painter(this);
-    QPen     pen;
-    pen.setColor(Qt::white);
-    painter.setPen(pen);
 
     //y轴缩放
     yscale = getGridHeight() / (highestBid -lowestBid ) ;
-
     //画笔的线宽
     lineWidth;
+    //画线要连接的店
+    QVector<QPoint> point;
 
-    //画线连接的两个点
-
-    QVector<QPoint> point5;
-    QVector<QPoint> point10;
-    QVector<QPoint> point20;
-    QVector<QPoint> point30;
-    QVector<QPoint> point60;
-
+    //临时点
     QPoint temp;
 
+    //x轴步进
     double xstep = getGridWidth() / totalDay;
 
 
 
-    for( int i= beginDay;i<endDay;++i)
+
+    switch(day)
     {
-
-        temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-        temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine5 - lowestBid) *yscale - getMarginBottom());
-        point5.push_back(temp);
-
-
-        temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-        temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine10 - lowestBid) *yscale - getMarginBottom());
-        point10.push_back(temp);
-
-        temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-        temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine20 - lowestBid) *yscale - getMarginBottom());
-        point20.push_back(temp);
-
-        temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-        temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine30 - lowestBid) *yscale - getMarginBottom());
-        point30.push_back(temp);
-
-        temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-        temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine60 - lowestBid) *yscale - getMarginBottom());
-        point60.push_back(temp);
-
-
+    case 5:
+        for( int i= beginDay;i<endDay;++i)
+        {
+            if( mDataFile.kline[i].averageLine5 == 0)
+                continue;
+            temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine5 - lowestBid) *yscale - getMarginBottom());
+            point.push_back(temp);
+        }
+        break;
+    case 10:
+        for( int i= beginDay;i<endDay;++i)
+        {
+            if( mDataFile.kline[i].averageLine10 == 0)
+                continue;
+            temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine10 - lowestBid) *yscale - getMarginBottom());
+            point.push_back(temp);
+        }
+        break;
+    case 20:
+        for( int i= beginDay;i<endDay;++i)
+        {
+            if( mDataFile.kline[i].averageLine20 == 0)
+                continue;
+            temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine20 - lowestBid) *yscale - getMarginBottom());
+            point.push_back(temp);
+        }
+        break;
+    case 30:
+        for( int i= beginDay;i<endDay;++i)
+        {
+            if( mDataFile.kline[i].averageLine30 == 0)
+                continue;
+            temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine30 - lowestBid) *yscale - getMarginBottom());
+            point.push_back(temp);
+        }
+        break;
+    case 60:
+        for( int i= beginDay;i<endDay;++i)
+        {
+            if( mDataFile.kline[i].averageLine60 == 0)
+                continue;
+            temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
+            temp.setY(getWidgetHeight() - (mDataFile.kline[i].averageLine60 - lowestBid) *yscale - getMarginBottom());
+            point.push_back(temp);
+        }
+        break;
+    default:
+        break;
     }
 
-    // 5
-    QPolygon poly5(point5);
-    painter.drawPolyline(poly5);
 
+    QPainter painter(this);
+    QPen     pen;
 
-    //10
-    pen.setColor(Qt::yellow);
+    switch(day)
+    {
+    case 5:
+        pen.setColor(Qt::white);
+        break;
+    case 10:
+        pen.setColor(Qt::yellow);
+        break;
+    case 20:
+        pen.setColor(Qt::magenta);
+        break;
+    case 30:
+        pen.setColor(Qt::green);
+        break;
+    case 60:
+        pen.setColor(Qt::cyan);
+        break;
+    default:
+        pen.setColor(Qt::white);
+        break;
+    }
     painter.setPen(pen);
-    QPolygon poly10(point10);
-    painter.drawPolyline(poly10);
-
-
-    //20
-    pen.setColor(Qt::magenta);
-    painter.setPen(pen);
-    QPolygon poly20(point20);
-    painter.drawPolyline(poly20);
-
-
-    pen.setColor(Qt::green);
-    painter.setPen(pen);
-    QPolygon poly30(point30);
-    painter.drawPolyline(poly30);
-
-
-    pen.setColor(Qt::cyan);
-    painter.setPen(pen);
-    QPolygon poly60(point60);
-    painter.drawPolyline(poly60);
-
+    QPolygon polykline(point);
+    painter.drawPolyline(polykline);
 }
 
-//void KLineGrid::showDetaiInformation(QString time,
-//                                   double currentPrice,
-//                                   double openingPrice,
-//                                   double highestBid,
-//                                   double lowestBid,
-//                                   double closeingPrice,
-//                                   double amountOfIncrease,
-//                                   double amountOfAmplitude,
-//                                   double totalVolume,
-//                                   double totalAmount,
-//                                   double turnoverRate)
-//{
-//    ;
-//}
+
+

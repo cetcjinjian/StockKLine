@@ -19,30 +19,26 @@ MainWindow::MainWindow(QWidget *parent) :
     pgrid->setObjectName(tr("kline"));
     pgrid->setFocusPolicy(Qt::StrongFocus);
 
-    auto p2 = new KLineGrid(this);
-    p2->setFocusPolicy(Qt::StrongFocus);
-//    setCentralWidget(pgrid);
+//    auto p2 = new KLineGrid(this);
+//    p2->setFocusPolicy(Qt::StrongFocus);
 
-
-    QSplitter *splitterMain = new QSplitter(Qt::Vertical, 0); //新建主分割窗口，水平分割
-
-
-    QSplitter *splitterLeft = new QSplitter(Qt::Vertical, splitterMain);
-//    QTextEdit *textDown = new QTextEdit(QObject::tr("down"));
-//    textDown->setAlignment(Qt::AlignCenter);
-    splitterLeft->addWidget(pgrid);
+    setCentralWidget(pgrid);
 
 
 
-    QSplitter *splitterRight = new QSplitter(Qt::Vertical, splitterMain);
-//    QTextEdit *textUp = new QTextEdit(QObject::tr("top"),splitterRight);
-//    textUp->setAlignment(Qt::AlignCenter);
+//    QSplitter *splitterMain = new QSplitter(Qt::Vertical, 0); //新建主分割窗口，水平分割
+//    QSplitter *splitterLeft = new QSplitter(Qt::Vertical, splitterMain);
+//    QSplitter *splitterRight = new QSplitter(Qt::Vertical, splitterMain);
+//    splitterLeft->addWidget(pgrid);
+//    splitterRight->addWidget(p2);
+//    this->setCentralWidget(splitterMain);
 
-    splitterRight->addWidget(p2);
-
-    this->setCentralWidget(splitterMain);
 
     resize(1200,800);
+
+
+
+
 }
 
 MainWindow::~MainWindow()

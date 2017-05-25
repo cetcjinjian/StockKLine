@@ -47,14 +47,7 @@ public:
 
 
     //画均线
-    void drawAverageLine();
-    void drawAverageLine5();
-    void drawAverageLine10();
-    void drawAverageLine20();
-    void drawAverageLine30();
-    void drawAverageLine60();
-
-
+    void drawAverageLine(int day);
 
 private:
     DataFile mDataFile;
