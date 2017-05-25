@@ -34,13 +34,15 @@ SOURCES += main.cpp\
     autogrid.cpp \
     klinegrid.cpp \
     datafile.cpp \
-    showdetail.cpp
+    showdetail.cpp \
+    kvolumegrid.cpp
 
 HEADERS  += mainwindow.h \
     autogrid.h \
     klinegrid.h \
     datafile.h \
-    showdetail.h
+    showdetail.h \
+    kvolumegrid.h
 
 FORMS    += mainwindow.ui
 

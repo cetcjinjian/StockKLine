@@ -79,9 +79,13 @@ void KLineGrid::initial()
 
     //构造详细数据展示页面
     mShowDrtail = new ShowDetail(this);
-    mShowDrtail->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
+    mShowDrtail->setModal(false);
+    mShowDrtail->setFixedSize(140,700);
+    mShowDrtail->show();
+
+    //mShowDrtail->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
     QWidget* main = this->parentWidget() ;
-    static_cast<MainWindow*>(main)->addDockWidget(Qt::LeftDockWidgetArea,mShowDrtail);
+    //static_cast<MainWindow*>(main)->addDockWidget(Qt::LeftDockWidgetArea,mShowDrtail);
     //delete main;
 
 }
@@ -193,6 +197,8 @@ void KLineGrid::drawKline()
     painter.setPen(pen);
 
 
+    if (beginDay <0)
+        return;
 
     //y轴缩放
     yscale = getGridHeight() / (highestBid -lowestBid ) ;
@@ -549,6 +555,9 @@ void KLineGrid::drawTips()
 
 
 
+    if( currentDay ==0)
+        return;
+
 
     QColor openingColor = mDataFile.kline[currentDay].openingPrice > mDataFile.kline[currentDay -1].openingPrice ?
                           QColor("#FF0000"):QColor("#00FF00");
@@ -679,7 +688,7 @@ void KLineGrid::drawAverageLine(int day)
     yscale = getGridHeight() / (highestBid -lowestBid ) ;
     //画笔的线宽
     lineWidth;
-    //画线要连接的店
+    //画线要连接的点
     QVector<QPoint> point;
 
     //临时点
@@ -689,6 +698,9 @@ void KLineGrid::drawAverageLine(int day)
     double xstep = getGridWidth() / totalDay;
 
 
+
+    if( beginDay < 0)
+        return;
 
 
     switch(day)

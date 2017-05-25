@@ -5,10 +5,10 @@
 #include <QWidget>
 #include <QDockWidget>
 #include <QDialog>
+#include "klinegrid.h"
 
-
-class ShowDetail : public QDockWidget
-//class ShowDetail : public QDialog
+//class ShowDetail : public QDockWidget
+class ShowDetail : public QDialog
 {
 
     Q_OBJECT

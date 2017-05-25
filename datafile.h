@@ -25,6 +25,10 @@ typedef struct
     double averageLine20;           //20日均线
     double averageLine30;           //30日均线
     double averageLine60;           //60日均线
+    double ftotalVolume;
+    double ftotalAmount;
+    double volumeAverage5;          //成交量5日均值
+    double volumeAverage10;         //成交量10日均值
 }KLine;
 
 
@@ -42,6 +46,13 @@ public:
     void calAverageLine20();
     void calAverageLine30();
     void calAverageLine60();
+
+
+    void calvolumeAverage5();
+    void calvolumeAverage10();
+
+    void Corvert();
+
 
 };
 

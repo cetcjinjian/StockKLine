@@ -3,8 +3,9 @@
 #include <QDockWidget>
 #include <QPainter>
 #include <QFont>
+#include <klinegrid.h>
 
-ShowDetail::ShowDetail(QWidget* parent) : QDockWidget(parent)
+ShowDetail::ShowDetail(QWidget* parent) : QDialog(parent)
 {
 
     QFont ft;
@@ -25,13 +26,12 @@ void ShowDetail::paintEvent(QPaintEvent *event)
 {
     drawBK();
     drawStr();
+
+
 }
 
 void ShowDetail::drawStr()
 {
-
-
-
     QPainter painter(this);
     QPen pen;
     pen.setColor(QColor("#FFFFFF"));

@@ -9,6 +9,9 @@
 #include <QString>
 
 
+
+class ShowDetail;
+
 class KLineGrid : public AutoGrid
 {
     Q_OBJECT

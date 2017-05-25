@@ -75,6 +75,9 @@ bool DataFile::readData(QString filestr)
 
 
     calAverageLine();
+    Corvert();
+    calvolumeAverage5();
+    calvolumeAverage10();
     return true;
 }
 
@@ -179,4 +182,47 @@ void DataFile::calAverageLine60()
         kline[i].averageLine60 = sum /60;
     }
 }
+
+void DataFile::calvolumeAverage5()
+{
+
+    for( int i=4;i<kline.size();++i)
+    {
+        double sum = 0;
+        for(int j=i-4;j<=i;++j)
+        {
+            sum += kline[j].ftotalVolume;
+        }
+        kline[i].volumeAverage5 = sum /5;
+    }
+
+
+}
+
+
+void DataFile::calvolumeAverage10()
+{
+    for( int i=9;i<kline.size();++i)
+    {
+        double sum = 0;
+        for(int j=i-9;j<=i;++j)
+        {
+            sum += kline[j].ftotalVolume;
+        }
+        kline[i].volumeAverage10 = sum /10;
+    }
+}
+
+void DataFile::Corvert()
+{
+    for(int i=0;i<kline.size();++i)
+    {
+        QString strtemp = kline[i].totalVolume;
+        strtemp = strtemp.mid(1,strtemp.length());
+        strtemp = strtemp.mid(0,strtemp.length()-1);
+        strtemp.replace(QString(","),QString(""));
+        kline[i].ftotalVolume= strtemp.toInt();
+    }
+}
+
 
