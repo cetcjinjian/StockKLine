@@ -2,3 +2,4 @@
 使用QT绘制k线，效果如下
 ![image](stock.png)
 ![image](stock2.png)
+![image](Stock3.png)
